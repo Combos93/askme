@@ -9,8 +9,13 @@ class User < ApplicationRecord
 
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
+  # Валидация на уникальность ника - нельзя создать такой же
+  validates :username, uniqueness: { case_sensitive: false }
+  # Валидация максимальной длины ника - 40 символов
   validates :username, length: { maximum: 40}
+  # Валидация ника - на наличие только букв, цифр и символа '_'
   validates_format_of :username, :with => /\A[a-zA-Z0-9_]*\z/
+  # Валидация e-mail`a - на верный ввод почты.
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/
 
   attr_accessor :password
@@ -19,6 +24,8 @@ class User < ApplicationRecord
   validates_confirmation_of :password
 
   before_save :encrypt_password
+  # Колбэк на downcase ника, при регистрации
+  before_save { username.downcase! }
 
   def encrypt_password
     if self.password.present?
