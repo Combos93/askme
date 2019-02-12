@@ -6,6 +6,7 @@ class User < ApplicationRecord
   DIGEST = OpenSSL::Digest::SHA256.new
 
   has_many :questions
+  attr_accessor :password
 
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
@@ -17,8 +18,6 @@ class User < ApplicationRecord
   validates_format_of :username, :with => /\A[a-zA-Z0-9_]*\z/
   # Валидация e-mail`a - на верный ввод почты.
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/
-
-  attr_accessor :password
 
   validates_presence_of :password, on: :create
   validates_confirmation_of :password
