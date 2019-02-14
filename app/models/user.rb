@@ -10,8 +10,6 @@ class User < ApplicationRecord
 
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
-  # Валидация на уникальность ника - нельзя создать такой же
-  validates :username, uniqueness: { case_sensitive: false }
   # Валидация максимальной длины ника - 40 символов
   validates :username, length: { maximum: 40}
   # Валидация ника - на наличие только букв, цифр и символа '_'
@@ -24,7 +22,13 @@ class User < ApplicationRecord
 
   before_save :encrypt_password
   # Колбэк на downcase ника, при регистрации
-  before_save { username.downcase! }
+  before_validation :downcase
+
+  private
+
+  def downcase
+    self.username = self.username.downcase
+  end
 
   def encrypt_password
     if self.password.present?
@@ -44,10 +48,10 @@ class User < ApplicationRecord
     user = find_by(email: email)
 
     if user.present? &&
-      user.password_hash == User.hash_to_string(OpenSSL::PKCS5.pbkdf2_hmac(password,
-                                                                           user.password_salt, ITERATIONS,
-                                                                           DIGEST.length, DIGEST))
-      user
+        user.password_hash == User.hash_to_string(OpenSSL::PKCS5.pbkdf2_hmac(password,
+                                                                             user.password_salt, ITERATIONS,
+                                                                             DIGEST.length, DIGEST))
+    user
     else
       nil
     end
