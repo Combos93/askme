@@ -1,5 +1,6 @@
 <div class="question">
   <div class="question-content">
+
     <div class="question-text text-lead">
       <%= question.text %>
     </div>
@@ -11,7 +12,7 @@
     <% end %>
 
     <div class="question-date">
-      <%= question.created_at.strftime('%d %b %M:%H') %>
+      <%= question.created_at.strftime('%d %b %y %M:%H') %>
     </div>
   </div>
 </div>

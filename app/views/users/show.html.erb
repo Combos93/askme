@@ -11,6 +11,10 @@
     @<%= @user.username %>
   </h2>
 
+
+  <%= render partial: 'questions/question_sklonjator', object: @questions %>
+
+
   <div class="user-ask-button container text-center">
     <%= link_to "Спроси меня", '', class: 'button button-light', id: 'ask-button' %>
   </div>
