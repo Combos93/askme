@@ -17,9 +17,9 @@ module ApplicationHelper
       return voprosa
     end
 
-    #if questions == 0
-    #  return "У вас нет вопросов."
-    #end
+    if questions == 0
+      return " нет вопросов"
+    end
 
     voprosov
   end

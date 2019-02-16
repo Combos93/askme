@@ -12,7 +12,13 @@
   </h2>
 
 
-  <%= render partial: 'questions/question_sklonjator', object: @questions %>
+
+
+  <div class="title-small buffer-both">
+    <%= "У Вас #{sklonenie(@questions.count, "#{@questions.count} вопрос", "#{@questions.count} вопроса", "#{@questions.count} вопросов")}"%>
+  </div>
+
+
 
 
   <div class="user-ask-button container text-center">
