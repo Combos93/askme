@@ -9,18 +9,19 @@ module ApplicationHelper
 
   def sklonenie(questions, vopros, voprosa, voprosov)
     ostatok = questions % 10
+
     if ostatok == 1
-      return vopros
+      return "#{@questions.count} #{vopros}"
     end
 
     if ostatok.between?(2, 4)
-      return voprosa
+      return "#{@questions.count} #{voprosa}"
     end
 
     if questions == 0
       return " нет вопросов"
     end
 
-    voprosov
+    "#{@questions.count} #{voprosov}"
   end
 end

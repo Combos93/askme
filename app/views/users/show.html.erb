@@ -11,15 +11,9 @@
     @<%= @user.username %>
   </h2>
 
-
-
-
   <div class="title-small buffer-both">
-    <%= "У Вас #{sklonenie(@questions.count, "#{@questions.count} вопрос", "#{@questions.count} вопроса", "#{@questions.count} вопросов")}"%>
+    <%= "У Вас #{sklonenie(@questions.count, "вопрос", "вопроса", "вопросов")}" %>
   </div>
-
-
-
 
   <div class="user-ask-button container text-center">
     <%= link_to "Спроси меня", '', class: 'button button-light', id: 'ask-button' %>
