@@ -19,7 +19,7 @@ module ApplicationHelper
     end
 
     if questions == 0
-      return " нет вопросов"
+      return " нет #{voprosov}"
     end
 
     "#{@questions.count} #{voprosov}"

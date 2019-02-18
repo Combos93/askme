@@ -1,38 +1,58 @@
 class UsersController < ApplicationController
+
+  before_action :load_user, except: [:index, :new, :create]
+  before_action :authorize_user, except: [:index, :new, :create, :show]
+
   def index
-    @users = [
-      User.new(
-        id: 1,
-        name: 'Vadim',
-        username: 'installero',
-        avatar_url: 'https://ih0.redbubble.net/image.213186038.0307/st%2Csmall%2C215x235-pad%2C210x230%2Cf8f8f8.lite-1u1.jpg'
-      ),
-      User.new(
-        id: 2,
-        name: 'Misha',
-        username: 'aristofun'
-      )
-    ]
+    @users = User.all
   end
 
   def new
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    @user = User.new
+  end
+
+  def create
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to root_url, notice: 'Пользователь успешно создан! :)'
+    else
+      render 'new'
+    end
   end
 
   def edit
   end
 
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Данные успешно обновлены!'
+    else
+      render 'edit'
+    end
+  end
+
   def show
-    @user = User.new(
-      name: 'Misha',
-      username: 'Combos',
-      avatar_url: 'https://ih0.redbubble.net/image.213186038.0307/st%2Csmall%2C215x235-pad%2C210x230%2Cf8f8f8.lite-1u1.jpg'
-    )
+    @questions = @user.questions.order(created_at: :desc)
 
-    @questions = [
-      Question.new(text: 'Как дела?', created_at: Date.parse('14.02.2019')),
-      Question.new(text: 'В чём смысл жизни?', created_at: Date.parse('14.02.2019'))
-    ]
+    @new_question = @user.questions.build
+  end
 
-    @new_question = Question.new
+  private
+
+  def load_user
+    @user ||= User.find params[:id]
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation,
+                                 :name, :username, :avatar_url)
+  end
+
+  def authorize_user
+    reject_user unless @user == current_user
   end
 end
