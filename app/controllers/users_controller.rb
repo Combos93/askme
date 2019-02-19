@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :load_user, except: [:index, :new, :create]
-  before_action :authorize_user, except: [:index, :new, :create, :show]
+  before_action :authorize_user, except: [:index, :new, :create, :show, :destroy]
 
   def index
     @users = User.all
@@ -39,6 +39,12 @@ class UsersController < ApplicationController
     @questions = @user.questions.order(created_at: :desc)
 
     @new_question = @user.questions.build
+  end
+
+  def destroy
+    @user.destroy
+
+    redirect_to root_url, notice: 'Пользователь успешно удалён! ;('
   end
 
   private

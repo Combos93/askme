@@ -7,6 +7,13 @@
     <%= link_to 'Редактировать профиль', edit_user_path(@user) if current_user == @user %>
   </div>
 
+  <% if current_user == @user %>
+    <div class="question-actions">
+      <%= link_to fa_icon('trash-o'), user_path(@user),
+                  method: :delete, data: {confirm: 'Точно удалить пользователя?'} %>
+    </div>
+  <% end %>
+
   <div class="user-image-div">
     <%= image_tag user_avatar(@user), class: 'user-image', alt: '[Фото]' %>
   </div>
