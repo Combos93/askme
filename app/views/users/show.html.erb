@@ -9,7 +9,7 @@
 
   <% if current_user == @user %>
     <div class="question-actions">
-      <%= link_to fa_icon('trash-o'), user_path(@user),
+      <%= link_to "Удалить пользователя", user_path(@user), class: 'button button-red',
                   method: :delete, data: {confirm: 'Точно удалить пользователя?'} %>
     </div>
   <% end %>
@@ -23,7 +23,11 @@
   </h2>
 
   <div class="title-small buffer-both">
-    <%= "У Вас #{sklonenie(@questions.count, "вопрос", "вопроса", "вопросов")}" %>
+    <% if @questions.count == 0 %>
+      <%= "У Вас #{sklonenie(@questions.count, "вопрос", "вопроса", "вопросов")}" %>
+    <% else %>
+      <%= "У Вас #{@questions.count} #{sklonenie(@questions.count, "вопрос", "вопроса", "вопросов")}" %>
+    <% end %>
   </div>
 
   <div class="user-details">
@@ -33,16 +37,19 @@
 
     <div class="user-statistics container text-center">
       <div class="column-1-3">
-        <h1 class="title-small"><%= @questions_count %></h1>
-        <p>вопросов</p>
+        <h1 class="title-small"><%= @questions_count unless @questions_count == 0 %></h1>
+        <p><%= "#{sklonenie(@questions_count, "вопрос",
+                            "вопроса", "вопросов")}" %></p>
       </div>
       <div class="column-1-3">
-        <h1 class="title-small"><%= @answers_count %></h1>
-        <p>ответов</p>
+        <h1 class="title-small"><%= @answers_count unless @answers_count == 0 %></h1>
+        <p><%= "#{sklonenie(@answers_count, "ответ",
+                            "ответа", "ответов")}" %></p>
       </div>
       <div class="column-1-3">
-        <h1 class="title-small"><%= @unanswered_count %></h1>
-        <p>безответных</p>
+        <h1 class="title-small"><%= @unanswered_count unless @unanswered_count == 0 %></h1>
+        <p><%= "#{sklonenie(@unanswered_count, "неотвеченный вопрос",
+                            "неотвеченных вопроса", "неотвеченных вопросов")}" %></p>
       </div>
     </div>
   </div>

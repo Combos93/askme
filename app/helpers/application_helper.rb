@@ -10,19 +10,11 @@ module ApplicationHelper
   def sklonenie(questions, vopros, voprosa, voprosov)
     ostatok = questions % 10
 
-    if ostatok == 1
-      return "#{@questions.count} #{vopros}"
-    end
+    return " #{vopros}" if ostatok == 1
+    return " #{voprosa}" if ostatok.between?(2, 4)
+    return " нет #{voprosov}" if questions == 0
 
-    if ostatok.between?(2, 4)
-      return "#{@questions.count} #{voprosa}"
-    end
-
-    if questions == 0
-      return " нет #{voprosov}"
-    end
-
-    "#{@questions.count} #{voprosov}"
+    " #{voprosov}"
   end
 
   def fa_icon(icon_class)

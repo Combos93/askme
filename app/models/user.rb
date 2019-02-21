@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :questions
   attr_accessor :password
 
-  validates :email, :username, presence: true
+  validates :email, :name, :username, presence: true
   validates :email, :username, uniqueness: true
   # Валидация максимальной длины ника - 40 символов
   validates :username, length: { maximum: 40}

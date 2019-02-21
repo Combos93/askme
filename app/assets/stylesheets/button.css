@@ -29,3 +29,22 @@
   line-height: 15px;
   padding: 7px 15px;
 }
+
+.button-red {
+  color: #fff;
+  background-color: #b75849;
+  font-weight: lighter;
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 2px solid #878388;
+  white-space: nowrap;
+  padding: 6px 12px;
+  line-height: 1.6;
+  border-radius: 4px;
+}
+
+.button-red:hover {
+  color: #fff;
+  background-color: #b74e37;
+  border: 2px solid #8b878c;
+}
