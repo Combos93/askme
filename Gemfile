@@ -5,7 +5,6 @@ ruby '2.5.3'
 
 gem 'rails', '~> 5.2.2'
 gem 'jquery-rails'
-gem 'rails-ujs'
 gem 'uglifier'
 
 group :production do

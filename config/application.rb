@@ -36,6 +36,8 @@ module Askme
     config.i18n.default_locale = :en
     config.i18n.locale = :ru
 
+    I18n.config.available_locales = :en, :ru
+
     config.i18n.fallbacks = [:en]
   end
 end

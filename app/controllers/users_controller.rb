@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :load_user, except: [:index, :new, :create]
-  before_action :authorize_user, except: [:index, :new, :create, :show, :destroy]
+  before_action :authorize_user, except: [:index, :new, :create, :show]
 
   def index
     @users = User.all
@@ -47,6 +47,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    session[:user_id] = nil
     @user.destroy
 
     redirect_to root_url, notice: 'Пользователь успешно удалён! ;('
