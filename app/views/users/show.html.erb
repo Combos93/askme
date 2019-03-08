@@ -7,13 +7,6 @@
     <%= link_to 'Редактировать профиль', edit_user_path(@user) if current_user == @user %>
   </div>
 
-  <% if current_user == @user %>
-    <div class="question-actions">
-      <%= link_to "Удалить пользователя", user_path(@user), class: 'button button-red',
-                  method: :delete, data: {confirm: 'Точно удалить пользователя?'} %>
-    </div>
-  <% end %>
-
   <div class="user-image-div">
     <%= image_tag user_avatar(@user), class: 'user-image', alt: '[Фото]' %>
   </div>
@@ -60,7 +53,6 @@
     <div class="form">
       <%= form_for @new_question do |f| %>
         <%= f.hidden_field :user_id %>
-        <%= f.hidden_field :author_id %>
 
         <div class="form-field">
           <%= f.label "Ваш вопрос для @#{@user.username}", class: 'form-label' %>

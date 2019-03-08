@@ -5,6 +5,9 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+
+    @q_tags = Question.pluck(:qhashtags).uniq
+    @a_tags = Question.pluck(:ahashtags).uniq
   end
 
   def new

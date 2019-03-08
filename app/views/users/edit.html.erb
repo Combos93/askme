@@ -55,4 +55,12 @@
     </div>
     <% end %>
   </div>
+  <div class="column-1-2">
+    <% if current_user == @user %>
+      <div class="question-actions">
+        <%= link_to "Удалить пользователя", user_path(@user), class: 'button button-red',
+                    method: :delete, data: {confirm: 'Точно удалить пользователя?'} %>
+      </div>
+    <% end %>
+  </div>
 </div>
