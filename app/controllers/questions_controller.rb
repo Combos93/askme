@@ -13,6 +13,9 @@ class QuestionsController < ApplicationController
     @question.author = current_user
 
     if @question.save
+      # @new_htag = Question.hashtag
+      @new_htag = QuestionWithHtag.where(question_id: @question).hashtag
+
       redirect_to user_path(@question.user), notice: 'Ваш вопрос успешно создан для пользователя.'
     else
       render :edit

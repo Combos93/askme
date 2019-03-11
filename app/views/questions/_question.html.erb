@@ -36,17 +36,18 @@
   </div>
 
   <div class="question-content">
+    <%= @new_htag %>
     <% if question.qhashtags.present? %>
       <% qtags = question.qhashtags.split(" ") %>
       <% qtags.each do |tag| %>
-        <%= link_to tag, hashtag_index_path(tag) %>
+          <%= link_to tag, hashtag_show_path(tag) %>
       <% end %>
     <% end %>
 
     <% if question.ahashtags.present? %>
       <% atags = question.ahashtags.split(" ") %>
       <% atags.each do |tag| %>
-        <%= link_to tag, hashtag_index_path(tag) %>
+        <%= link_to tag, hashtag_show_path(tag) %>
       <% end %>
     <% end %>
   </div>

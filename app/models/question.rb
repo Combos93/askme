@@ -8,7 +8,44 @@ class Question < ApplicationRecord
   validates :text, length: { maximum: 255}
 
   after_commit :question_hashtags, on: :create
+  after_commit :extract_htags, on: [:create, :update]
   # after_commit :question_hashtags, :answer_hashtags, on: :update
+
+################################################
+  # puts "Введите строку с хэштегами:"
+  # string = STDIN.gets.chomp
+
+  # Запишем регулярное выражение для нашего хэштега в переменную hashtag_regexp.
+  # Нам нужен символ «#», за которым следует как минимум один символ слова: буква
+  # русского или латинского алфавита, цифра или подчекивание. Добавим также минус.
+  #
+  # Подробнее о всевозможных ключевых символах в регулярных выражениях руби типа
+  # [:word:] можно прочитать в документации к классу Regexp:
+  #
+  # https://ruby-doc.org/core-2.4.0/Regexp.html
+  # hashtag_regexp = /#[[:word:]-]+/
+  # /(?:^|\s)(?:(?:#\d+?)|(#\w+?))\s/
+  # /(?:\s|^)(?:#(?!(?:\d+|\w+?_|_\w+?)(?:\s|$)))(\w+)(?=\s|$)/
+
+  # Для поиска соответствий регулярному выражению в строке используем метод строки
+  # scan, который на вход принимает регулярное выражение. Каждое найденное
+  # соответствие он запишет в отдельный элемент массива, который вернет.
+  #
+  # https://ruby-doc.org/core-2.4.0/String.html#method-i-scan
+  # hashtags = string.scan(hashtag_regexp)
+
+  # Выводим найденные хэштеги на экран
+  # puts
+  # puts "Нашли вот такие хэштеги: " + hashtags.join(", ")
+  ###################################################
+
+  def extract_htags
+    tags = self.text.scan(/#[[:word:]-]+/)
+
+    tags.each do |htag|
+      @new_htag = hashtags.create(tag: htag)
+    end
+  end
 
   def question_hashtags
     @q_hashtags = []
