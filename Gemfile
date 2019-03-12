@@ -6,6 +6,9 @@ ruby '2.5.3'
 gem 'rails', '~> 5.2.2'
 gem 'jquery-rails'
 gem 'uglifier'
+gem 'new_google_recaptcha'
+gem 'recaptcha', require: 'recaptcha/rails'
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
 group :production do
   gem 'pg'

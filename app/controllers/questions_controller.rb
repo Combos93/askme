@@ -12,9 +12,9 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.author = current_user
 
-    if @question.save
+    if @question.save && check_captcha(@question)
       # @new_htag = Question.hashtag
-      @new_htag = QuestionWithHtag.where(question_id: @question).hashtag
+      # @new_htag = QuestionWithHtag.where(question_id: @question).hashtag
 
       redirect_to user_path(@question.user), notice: 'Ваш вопрос успешно создан для пользователя.'
     else
@@ -55,5 +55,13 @@ class QuestionsController < ApplicationController
 
   def authorize_user
     reject_user unless @question.user == current_user
+  end
+
+  def check_captcha(model)
+    if current_user.present?
+      true
+    else
+      verify_recaptcha(model: model)
+    end
   end
 end
