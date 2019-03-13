@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
 
   before_action :load_question, only: [:edit, :update, :destroy]
   before_action :authorize_user, except: [:create]
+  # after_action :set_author, only: [:create]
 
   # GET /questions/1/edit
   def edit
@@ -10,7 +11,8 @@ class QuestionsController < ApplicationController
   # POST /questions
   def create
     @question = Question.new(question_params)
-    @question.author = current_user
+
+    attach_author
 
     if @question.save && check_captcha(@question)
       # @new_htag = Question.hashtag
@@ -40,6 +42,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def attach_author
+    @question.author = current_user unless session[:user_id] == nil
+  end
 
   def load_question
     @question = Question.find(params[:id])

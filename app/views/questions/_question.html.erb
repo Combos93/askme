@@ -18,10 +18,10 @@
       <%= l(question.created_at, format: :short) %>
     </div>
 
-    <% if question.author == nil %>
-      <%= "@Аноним" %>
+    <% if question.author %>
+      <%= link_to "@#{question.author.name}", user_path(question.author) %>
     <% else %>
-      <%= link_to "@#{question.author.name }", user_path(question.author) %>
+      <%= "@Аноним" %>
     <% end %>
   </div>
 
