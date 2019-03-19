@@ -5,6 +5,8 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+
+    @hashtags = Hashtag.order(tag: :asc)
   end
 
   def new

@@ -10,21 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_08_131212) do
+ActiveRecord::Schema.define(version: 2019_03_18_133657) do
 
   create_table "hashtags", force: :cascade do |t|
     t.string "tag"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["tag"], name: "index_hashtags_on_tag", unique: true
   end
 
-  create_table "question_with_htags", force: :cascade do |t|
-    t.integer "question_id"
+  create_table "hashtags_questions", force: :cascade do |t|
     t.integer "hashtag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["hashtag_id"], name: "index_question_with_htags_on_hashtag_id"
-    t.index ["question_id"], name: "index_question_with_htags_on_question_id"
+    t.integer "question_id"
+    t.index ["hashtag_id"], name: "index_hashtags_questions_on_hashtag_id"
+    t.index ["question_id", "hashtag_id"], name: "index_hashtags_questions_on_question_id_and_hashtag_id", unique: true
   end
 
   create_table "questions", force: :cascade do |t|
@@ -34,16 +31,7 @@ ActiveRecord::Schema.define(version: 2019_03_08_131212) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.integer "author_id"
-    t.string "qhashtags"
-    t.string "ahashtags"
     t.index ["user_id"], name: "index_questions_on_user_id"
-  end
-
-  create_table "simple_hashtag_hashtags", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_simple_hashtag_hashtags_on_name"
   end
 
   create_table "users", force: :cascade do |t|
