@@ -8,7 +8,8 @@ class Question < ApplicationRecord
   validates :text, :user, presence: true
   validates :text, length: { maximum: 255}
 
-  before_save :extract_htags
+  after_commit :extract_htags
+  after_commit :destroy_unused_hashtags
 
   private
 
@@ -22,5 +23,9 @@ class Question < ApplicationRecord
     q_a.scan(/#[[:word:]_]+/).uniq.each do |name|
       hashtags << Hashtag.find_or_create_by!(tag: name)
     end
+  end
+
+  def destroy_unused_hashtags
+    Hashtag.left_outer_joins(:questions).where(questions: { id: nil }).destroy_all
   end
 end
