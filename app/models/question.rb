@@ -8,7 +8,7 @@ class Question < ApplicationRecord
   validates :text, :user, presence: true
   validates :text, length: { maximum: 255}
 
-  after_commit :extract_htags
+  after_commit :extract_htags, on: [:create, :update]
   after_commit :destroy_unused_hashtags
 
   private
